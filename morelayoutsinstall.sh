@@ -18,38 +18,50 @@ uline="\e[4m"
 # shellcheck disable=SC2034
 reset="\e[0m"
 
-bigtext () {
-	if [ "$(ls /usr/bin/figlet 2> /dev/null)" == "/usr/bin/figlet" ]; then
+bigtext() {
+	if [ "$(ls /usr/bin/figlet 2>/dev/null)" == "/usr/bin/figlet" ]; then
 		figlet "Zorin Tweaks"
 	else
 		echo -e "${bold}Zorin Tweaks${reset}"
 	fi
 }
 
-restart_gnome () {
-	if [ "$XDG_SESSION_TYPE" == "wayland" ]; then
-	echo -e "${red}Wayland won't restart GNOME by default, please logout and enable the extensions yourself using the GNOME Extensions app!${reset}"
-	elif [ "$XDG_SESSION_TYPE" == "x11" ]; then
-	echo -e "${green}restarting GNOME...${reset}"
-	busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting...")'
-	sleep 5s
-	echo -e "${green}GNOME restarted!${reset}"
-	else echo -e "${red}XDG_SESSION_TYPE isn't Wayland or X11...huh?${reset}"
+#	restart_gnome() {
+#		if [ "$XDG_SESSION_TYPE" == "wayland" ]; then
+#			echo -e "${red}Wayland won't restart GNOME by default, please logout and enable the extensions yourself using the GNOME Extensions app!${reset}"
+#		elif [ "$XDG_SESSION_TYPE" == "x11" ]; then
+#			echo -e "${green}restarting GNOME...${reset}"
+#			busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting...")'
+#			sleep 5s
+#			echo -e "${green}GNOME restarted!${reset}"
+#		else
+#			echo -e "${red}XDG_SESSION_TYPE isn't Wayland or X11...huh?${reset}"
+#		fi
+#	}
+
+restart_gnome() {
+	if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
+		echo -e "${green}restarting GNOME...${reset}"
+		busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting...")'
+		sleep 5s
+		echo -e "${green}GNOME restarted!${reset}"
+	else
+		echo -e "${red}Wayland won't restart GNOME by default, please logout and enable the extensions yourself using the GNOME Extensions app!${reset}"
 	fi
 }
 
-help () {
+help() {
 	bigtext
-   	echo -e "${bold}This script allows to set different Layouts on Zorin OS 16, as well as applying some other tweaks.${reset}"
+	echo -e "${bold}This script allows to set different Layouts on Zorin OS 16, as well as applying some other tweaks.${reset}"
 	echo -e "${green}Source Code: GitHub.com/TGRush/ZorinLayoutsRevised${reset}"
-   	echo -e "${reset}------------"
-   	echo -e "${blue}${bold}${uline}Syntax${reset}: $0 [Options]"
-   	echo -e "${reset}------------"
-   	echo -e "${blue}${bold}${uline}Available options:${reset}"
-   	echo -e "$0 -h   |   ${green}shows a help to do different actions${reset}"
-   	echo "------------"
+	echo -e "${reset}------------"
+	echo -e "${blue}${bold}${uline}Syntax${reset}: $0 [Options]"
+	echo -e "${reset}------------"
+	echo -e "${blue}${bold}${uline}Available options:${reset}"
+	echo -e "$0 -h   |   ${green}shows a help to do different actions${reset}"
+	echo "------------"
 	printf "\n"
-   	exit
+	exit
 }
 
 popshell() {
@@ -59,7 +71,7 @@ popshell() {
 	sudo apt install git node-typescript -y
 	mkdir ~/.popshell
 	cd ~/.popshell || exit
-	git clone https://github.com/pop-os/shell.git 
+	git clone https://github.com/pop-os/shell.git
 	cd shell || exit
 	make local-install
 	restart_gnome
@@ -138,15 +150,19 @@ impatience() {
 }
 
 revert() {
-	while [$installed] true
-		do
+	installed=true
+	while [$installed] true; do
+		(
 			sudo apt remove gnome-shell-extension-no-annoyance git node-typescript -y
 			rm -rf ~/.local/share/gnome-shell/extensions/{bluetooth-quick-connect@bjarosze.gmail.com,unite@hardpixel.eu,blur-my-shell@aunetx,just-perfection-desktop@just-perfection,caffeine@patapon.info,tiling-assistant@leleat-on-github,noannoyance@sindex.com,pop-shell@system76.com}
 			gnome-shell-extensions disable bluetooth-quick-connect@bjarosze.gmail.com unite@hardpixel.eu blur-my-shell@aunetx just-perfection-desktop@just-perfection caffeine@patapon.info tiling-assistant@leleat-on-github noannoyance@sindex.com pop-shell@system76.com -q
+		) && installed=false
+	done
+
 }
 
-gui () {
-ask=$(zenity --list --title="Installation Options" --column="0" "Pop-Shell (BETA)" "Unity Layout (BETA)" "Misc." --width=100 --height=300 --hide-header)
+gui() {
+	ask=$(zenity --list --title="Installation Options" --column="0" "Pop-Shell (BETA)" "Unity Layout (BETA)" "Misc." --width=100 --height=300 --hide-header)
 
 	if [ "$ask" == "Pop-Shell (BETA)" ]; then
 		popshell
@@ -160,12 +176,13 @@ ask=$(zenity --list --title="Installation Options" --column="0" "Pop-Shell (BETA
 		help
 	fi
 
-	if [ "$ask" == "Misc." ]; then ask2=$(zenity --list --title="Installation Options" --column="0" "Install No Annoyance" "Install Tiling Assistant" "Install Caffeine" "Install BlurMyShell" "Install Just Perfection" "Install Bluetooth Quick Connect" --width=100 --height=300 --hide-header)
-		if [ "$ask2" == "Install No Annoyance" ]; then 
+	if [ "$ask" == "Misc." ]; then
+		ask2=$(zenity --list --title="Installation Options" --column="0" "Install No Annoyance" "Install Tiling Assistant" "Install Caffeine" "Install BlurMyShell" "Install Just Perfection" "Install Bluetooth Quick Connect" --width=100 --height=300 --hide-header)
+		if [ "$ask2" == "Install No Annoyance" ]; then
 			noannoyance
 		fi
 
-		if [ "$ask2" == "Install Tiling Assistant" ];then
+		if [ "$ask2" == "Install Tiling Assistant" ]; then
 			tilingassistant
 		fi
 
@@ -188,24 +205,24 @@ ask=$(zenity --list --title="Installation Options" --column="0" "Pop-Shell (BETA
 }
 
 if [ -n "$1" ]; then
-   case "$1" in
-   	-h)
-      	help 
-      	;;
-   	-g)
-      	gui
-      	;;
+	case "$1" in
+	-h)
+		help
+		;;
+	-g)
+		gui
+		;;
 	--uninstall)
 		revert
 		;;
 	-u)
 		revert
 		;;
-   	*)
-      	echo "$1 is not an option"
-      	;;
-   esac
-   shift
+	*)
+		echo "$1 is not an option"
+		;;
+	esac
+	shift
 else
-   gui
+	gui
 fi
