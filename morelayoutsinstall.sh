@@ -26,6 +26,7 @@ bigtext() {
 	fi
 }
 
+#	old restart_gnome function:
 #	restart_gnome() {
 #		if [ "$XDG_SESSION_TYPE" == "wayland" ]; then
 #			echo -e "${red}Wayland won't restart GNOME by default, please logout and enable the extensions yourself using the GNOME Extensions app!${reset}"
@@ -164,43 +165,28 @@ revert() {
 gui() {
 	ask=$(zenity --list --title="Installation Options" --column="0" "Pop-Shell (BETA)" "Unity Layout (BETA)" "Misc." --width=100 --height=300 --hide-header)
 
-	if [ "$ask" == "Pop-Shell (BETA)" ]; then
+	elif [ "$ask" == "Pop-Shell (BETA)" ]; then
 		popshell
-	fi
-
-	if [ "$ask" == "Unity Layout (BETA)" ]; then
+	elif [ "$ask" == "Unity Layout (BETA)" ]; then
 		unity
-	fi
-
-	if [ "$ask" == "Info" ]; then
+	elif [ "$ask" == "Info" ]; then
 		help
 	fi
 
 	if [ "$ask" == "Misc." ]; then
 		ask2=$(zenity --list --title="Installation Options" --column="0" "Install No Annoyance" "Install Tiling Assistant" "Install Caffeine" "Install BlurMyShell" "Install Just Perfection" "Install Bluetooth Quick Connect" --width=100 --height=300 --hide-header)
-		if [ "$ask2" == "Install No Annoyance" ]; then
+		elif [ "$ask2" == "Install No Annoyance" ]; then
 			noannoyance
-		fi
-
-		if [ "$ask2" == "Install Tiling Assistant" ]; then
+		elif [ "$ask2" == "Install Tiling Assistant" ]; then
 			tilingassistant
-		fi
-
-		if [ "$ask2" == "Install Caffeine" ]; then
+		elif [ "$ask2" == "Install Caffeine" ]; then
 			caffeine
-		fi
-
-		if [ "$ask2" == "Install Just Perfection" ]; then
+		elif [ "$ask2" == "Install Just Perfection" ]; then
 			justperfection
-		fi
-
-		if [ "$ask2" == "Install BlurMyShell" ]; then
+		elif [ "$ask2" == "Install BlurMyShell" ]; then
 			blurmyshell
-		fi
-
-		if [ "$ask2" == "Install Bluetooth Quick Connect" ]; then
+		elif [ "$ask2" == "Install Bluetooth Quick Connect" ]; then
 			btquickconnect
-		fi
 	fi
 }
 
