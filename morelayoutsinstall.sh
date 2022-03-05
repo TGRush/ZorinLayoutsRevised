@@ -165,7 +165,7 @@ revert() {
 gui() {
 	ask=$(zenity --list --title="Installation Options" --column="0" "Pop-Shell (BETA)" "Unity Layout (BETA)" "Misc." --width=100 --height=300 --hide-header)
 
-	elif [ "$ask" == "Pop-Shell (BETA)" ]; then
+	if [ "$ask" == "Pop-Shell (BETA)" ]; then
 		popshell
 	elif [ "$ask" == "Unity Layout (BETA)" ]; then
 		unity
