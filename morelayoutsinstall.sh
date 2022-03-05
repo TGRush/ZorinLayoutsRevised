@@ -43,6 +43,7 @@ bigtext() {
 restart_gnome() {
 	if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
 		echo -e "${green}restarting GNOME...${reset}"
+		sleep 5s
 		busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting...")'
 		sleep 5s
 		echo -e "${green}GNOME restarted!${reset}"
@@ -69,7 +70,7 @@ popshell() {
 	echo -e "${red} heavily in-Beta, might not work as expected${reset}"
 	echo -e "${red}THIS REPLACES GNOME DEFAULT KEYBOARD SHORTCUTS${reset}"
 	read -r -p "Press [Enter] to continue, or [CTRL + C] to cancel."
-	sudo apt install git node-typescript -y
+	sudo apt install git node-typescript make build-essential -y
 	mkdir ~/.popshell
 	cd ~/.popshell || exit
 	git clone https://github.com/pop-os/shell.git
@@ -129,9 +130,11 @@ unity() {
 	wget https://extensions.gnome.org/extension-data/unitehardpixel.eu.v59.shell-extension.zip
 	unzip unitehardpixel.eu.v59.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/unite@hardpixel.eu/
 	restart_gnome
-	gnome-extensions disable zorin-dash@zorinos.com
 	gnome-extensions disable zorin-menu@zorinos.com
 	gnome-extensions disable zorin-taskbar@zorinos.com
+	cat unity-titlebar | dconf load /org/gnome/desktop/wm/preferences/button-layout/
+	cat unity-dock | dconf load /org/gnome/shell/extensions/zorin-dash/
+	gnome-extensions enable zorin-dash@zorinos.com
 	gnome-extensions enable unite@hardpixel.eu
 	echo -e "${green}all done!${reset}"
 }
@@ -151,15 +154,9 @@ impatience() {
 }
 
 revert() {
-	installed=true
-	while [$installed] true; do
-		(
-			sudo apt remove gnome-shell-extension-no-annoyance git node-typescript -y
-			rm -rf ~/.local/share/gnome-shell/extensions/{bluetooth-quick-connect@bjarosze.gmail.com,unite@hardpixel.eu,blur-my-shell@aunetx,just-perfection-desktop@just-perfection,caffeine@patapon.info,tiling-assistant@leleat-on-github,noannoyance@sindex.com,pop-shell@system76.com}
-			gnome-shell-extensions disable bluetooth-quick-connect@bjarosze.gmail.com unite@hardpixel.eu blur-my-shell@aunetx just-perfection-desktop@just-perfection caffeine@patapon.info tiling-assistant@leleat-on-github noannoyance@sindex.com pop-shell@system76.com -q
-		) && installed=false
-	done
-
+	sudo apt remove gnome-shell-extension-no-annoyance node-typescript -y
+	rm -rf ~/.local/share/gnome-shell/extensions/{bluetooth-quick-connect@bjarosze.gmail.com,unite@hardpixel.eu,blur-my-shell@aunetx,just-perfection-desktop@just-perfection,caffeine@patapon.info,tiling-assistant@leleat-on-github,noannoyance@sindex.com,pop-shell@system76.com}
+	gnome-extensions disable bluetooth-quick-connect@bjarosze.gmail.com unite@hardpixel.eu blur-my-shell@aunetx just-perfection-desktop@just-perfection caffeine@patapon.info tiling-assistant@leleat-on-github noannoyance@sindex.com pop-shell@system76.com -q
 }
 
 gui() {
