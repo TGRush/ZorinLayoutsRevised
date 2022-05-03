@@ -14,8 +14,6 @@ Simply paste this into your Terminal and hit `enter`:
 bash -c "$(wget https://raw.githubusercontent.com/TGRush/ZorinLayoutsRevised/master/morelayoutsinstall.sh -O -)"
 ```
 
-> ###### Note that this script is currently going a little bit of a re-work, thus some things might be broken at the moment.
-
 ---
 
 ## Contributing:
