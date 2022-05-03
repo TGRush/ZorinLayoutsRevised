@@ -187,6 +187,46 @@ gui() {
 	fi
 }
 
+tui () {
+	echo "${bold}${green}ZorinLayoutsRevised${reset}"
+	echo "Select one of the following to install:"
+	echo "1		Install Pop-shell window tiling"
+	echo "2		Install the unity-like layout"
+	echo "3		Install NoAnnoyance"
+	echo "4		Install Tiling Assistant (Win10 Window Tiling)"
+	echo "5		Install Caffeine (stop auto-suspend)"
+	echo "6		Install Just Perfection"
+	echo "7		Install BlurMyShell"
+	echo "8		Install Bluetooth Quick Connect"
+	read -r -p "Your selection: " tui-input
+		case $tui-input in
+			1)
+				popshell
+				;;
+			2)
+				unity
+				;;
+			3)
+				noannoyance
+				;;
+			4)
+				tilingassistant
+				;;
+			5)
+				caffeine
+				;;
+			6)
+				blurmyshell
+				;;
+			7)
+				btquickconnect
+				;;
+			*)
+				echo "$tui-input is not a valid option!"
+				exit 1;
+		esac
+}
+
 if [ -n "$1" ]; then
 	case "$1" in
 	-h)
