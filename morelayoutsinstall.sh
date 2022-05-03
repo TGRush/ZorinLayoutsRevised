@@ -1,7 +1,5 @@
 #!/bin/bash
 
-clear
-
 # Ansi color code variables
 # shellcheck disable=SC2034
 red="\e[0;91m"
@@ -17,6 +15,8 @@ bold="\e[1m"
 uline="\e[4m"
 # shellcheck disable=SC2034
 reset="\e[0m"
+
+clear
 
 bigtext() {
 	if [ "$(which figlet)" == "/usr/bin/figlet" ]; then
@@ -184,6 +184,8 @@ tui () {
 	echo "6		Install Just Perfection"
 	echo "7		Install BlurMyShell"
 	echo "8		Install Bluetooth Quick Connect"
+	echo "9		Revert any changes"
+	echo "0		Exit"
 	read -r -p "Your selection: " tui-input
 		case $tui-input in
 			1)
@@ -202,10 +204,17 @@ tui () {
 				caffeine
 				;;
 			6)
-				blurmyshell
+				justperfection
 				;;
 			7)
+				blurmyshell
+				;;
+			8)
 				btquickconnect
+				;;
+			0)
+				echo "Exiting!"
+				exit 0;
 				;;
 			*)
 				echo "$tui-input is not a valid option!"
