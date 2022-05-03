@@ -19,26 +19,12 @@ uline="\e[4m"
 reset="\e[0m"
 
 bigtext() {
-	if [ "$(ls /usr/bin/figlet 2>/dev/null)" == "/usr/bin/figlet" ]; then
+	if [ "$(which figlet)" == "/usr/bin/figlet" ]; then
 		figlet "Zorin Tweaks"
 	else
 		echo -e "${bold}Zorin Tweaks${reset}"
 	fi
 }
-
-#	old restart_gnome function:
-#	restart_gnome() {
-#		if [ "$XDG_SESSION_TYPE" == "wayland" ]; then
-#			echo -e "${red}Wayland won't restart GNOME by default, please logout and enable the extensions yourself using the GNOME Extensions app!${reset}"
-#		elif [ "$XDG_SESSION_TYPE" == "x11" ]; then
-#			echo -e "${green}restarting GNOME...${reset}"
-#			busctl --user call org.gnome.Shell /org/gnome/Shell org.gnome.Shell Eval s 'Meta.restart("Restarting...")'
-#			sleep 5s
-#			echo -e "${green}GNOME restarted!${reset}"
-#		else
-#			echo -e "${red}XDG_SESSION_TYPE isn't Wayland or X11...huh?${reset}"
-#		fi
-#	}
 
 restart_gnome() {
 	if [ "$XDG_SESSION_TYPE" != "wayland" ]; then
