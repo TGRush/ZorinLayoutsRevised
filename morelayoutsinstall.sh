@@ -186,8 +186,8 @@ tui () {
 	echo "8		Install Bluetooth Quick Connect"
 	echo "9		Revert any changes"
 	echo "0		Exit"
-	read -r -p "Your selection: " tui-input
-		case $tui-input in
+	read -r -p "Your selection: " tuiinput
+		case $tuiinput in
 			1)
 				popshell
 				;;
@@ -217,7 +217,7 @@ tui () {
 				exit 0;
 				;;
 			*)
-				echo "$tui-input is not a valid option!"
+				echo "$tuiinput is not a valid option!"
 				exit 1;
 		esac
 }
