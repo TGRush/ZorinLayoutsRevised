@@ -20,7 +20,7 @@ clear
 
 bigtext() {
 	if [ "$(which figlet)" == "/usr/bin/figlet" ]; then
-		figlet "Zorin Tweaks"
+		echo -e "${bold}$(figlet Zorin Tweaks)"
 	else
 		echo -e "${bold}Zorin Tweaks${reset}"
 	fi
@@ -69,80 +69,89 @@ popshell() {
 }
 
 noannoyance() {
-	echo -e "${green}Downloading extension...${reset}"
-	sudo apt install gnome-shell-extension-no-annoyance
-	restart_gnome
-	gnome-extensions enable noannoyance@sindex.com -q
+	# old ↓
+	# echo -e "${green}Downloading extension...${reset}"
+	# sudo apt install gnome-shell-extension-no-annoyance
+	# restart_gnome
+	# gnome-extensions enable noannoyance@sindex.com -q
+	$PWD/gnome-shell-extension-installer 2182 3.8 --restart-shell
 }
 
 tilingassistant() {
-	echo -e "${green}Downloading Extension...${reset}"
-	wget https://extensions.gnome.org/extension-data/tiling-assistantleleat-on-github.v23.shell-extension.zip
-	unzip tiling-assistantleleat-on-github.v23.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/tiling-assistant@leleat-on-github/
-	restart_gnome
-	gnome-extensions enable tiling-assistant@leleat-on-github
-	echo -e "${green}all done!${reset}"
+	# echo -e "${green}Downloading Extension...${reset}"
+	# wget https://extensions.gnome.org/extension-data/tiling-assistantleleat-on-github.v23.shell-extension.zip
+	# unzip tiling-assistantleleat-on-github.v23.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/tiling-assistant@leleat-on-github/
+	# restart_gnome
+	# gnome-extensions enable tiling-assistant@leleat-on-github
+	# echo -e "${green}all done!${reset}"
+	$PWD/gnome-shell-extension-installer 3733 3.8 --restart-shell
 }
 
 caffeine() {
-	echo -e "${green}Downloading extension...${reset}"
-	wget https://extensions.gnome.org/extension-data/caffeinepatapon.info.v37.shell-extension.zip
-	unzip caffeinepatapon.info.v37.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/caffeine@patapon.info/
-	restart_gnome
-	gnome-extensions enable caffeine@patapon.info
-	echo -e "${green}all done!${reset}"
+	# echo -e "${green}Downloading extension...${reset}"
+	# wget https://extensions.gnome.org/extension-data/caffeinepatapon.info.v37.shell-extension.zip
+	# unzip caffeinepatapon.info.v37.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/caffeine@patapon.info/
+	# restart_gnome
+	# gnome-extensions enable caffeine@patapon.info
+	# echo -e "${green}all done!${reset}"
+	$PWD/gnome-shell-extension-installer 517 3.8 --restart-shell
 }
 
 justperfection() {
-	echo -e "${green}Downloading extension...${reset}"
-	wget https://extensions.gnome.org/extension-data/just-perfection-desktopjust-perfection.v16.shell-extension.zip
-	unzip just-perfection-desktopjust-perfection.v16.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/just-perfection-desktop@just-perfection/
-	restart_gnome
-	gnome-extensions enable just-perfection-desktop@just-perfection
-	echo -e "${green}all done!${reset}"
+	# echo -e "${green}Downloading extension...${reset}"
+	# wget https://extensions.gnome.org/extension-data/just-perfection-desktopjust-perfection.v16.shell-extension.zip
+	# unzip just-perfection-desktopjust-perfection.v16.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/just-perfection-desktop@just-perfection/
+	# restart_gnome
+	# gnome-extensions enable just-perfection-desktop@just-perfection
+	# echo -e "${green}all done!${reset}"
+	$PWD/gnome-shell-extension-installer 3843 3.8 --restart-shell
 }
 
 blurmyshell() {
-	echo -e "${green}Downloading extension...${reset}"
-	wget https://extensions.gnome.org/extension-data/blur-my-shellaunetx.v22.shell-extension.zip
-	unzip blur-my-shellaunetx.v22.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/blur-my-shell@aunetx/
-	restart_gnome
-	gnome-extensions enable blur-my-shell@aunetx
-	echo -e "${green}all done!${reset}"
+	# echo -e "${green}Downloading extension...${reset}"
+	# wget https://extensions.gnome.org/extension-data/blur-my-shellaunetx.v22.shell-extension.zip
+	# unzip blur-my-shellaunetx.v22.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/blur-my-shell@aunetx/
+	# restart_gnome
+	# gnome-extensions enable blur-my-shell@aunetx
+	# echo -e "${green}all done!${reset}"
+	$PWD/gnome-shell-extension-installer 3193 3.8 --restart-shell
 }
 
 unity() {
-	echo -e "${green}Downloading extension...${reset}"
-	wget https://extensions.gnome.org/extension-data/unitehardpixel.eu.v59.shell-extension.zip
-	unzip unitehardpixel.eu.v59.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/unite@hardpixel.eu/
-	restart_gnome
+	# echo -e "${green}Downloading extension...${reset}"
+	# wget https://extensions.gnome.org/extension-data/unitehardpixel.eu.v59.shell-extension.zip
+	# unzip unitehardpixel.eu.v59.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/unite@hardpixel.eu/
+	# restart_gnome
 	gnome-extensions disable zorin-menu@zorinos.com
 	gnome-extensions disable zorin-taskbar@zorinos.com
 	cat unity-titlebar | dconf load /org/gnome/desktop/wm/preferences/button-layout/
 	cat unity-dock | dconf load /org/gnome/shell/extensions/zorin-dash/
 	gnome-extensions enable zorin-dash@zorinos.com
-	gnome-extensions enable unite@hardpixel.eu
+	# gnome-extensions enable unite@hardpixel.eu
+	$PWD/gnome-shell-extension-installer 1287 3.8 --restart-shell
 	echo -e "${green}all done!${reset}"
 }
 
 btquickconnect() {
-	wget https://extensions.gnome.org/extension-data/bluetooth-quick-connectbjarosze.gmail.com.v16.shell-extension.zip
-	unzip bluetooth-quick-connectbjarosze.gmail.com.v16.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/bluetooth-quick-connect@bjarosze.gmail.com/
-	restart_gnome
-	gnome-extensions enable bluetooth-quick-connect@bjarosze.gmail.com
+	# wget https://extensions.gnome.org/extension-data/bluetooth-quick-connectbjarosze.gmail.com.v16.shell-extension.zip
+	# unzip bluetooth-quick-connectbjarosze.gmail.com.v16.shell-extension.zip -d ~/.local/share/gnome-shell/extensions/bluetooth-quick-connect@bjarosze.gmail.com/
+	# restart_gnome
+	# gnome-extensions enable bluetooth-quick-connect@bjarosze.gmail.com
+	# echo -e "${green}all done!${reset}"
+	$PWD/gnome-shell-extension-installer 1401 3.8 --restart-shell
 	echo -e "${green}all done!${reset}"
 }
 
 impatience() {
-	echo -e "${green}Downloading extension...${reset}"
-	sudo apt install gnome-shell-extension-impatience
-
+	$PWD/gnome-shell-extension-installer 277 3.8 --restart-shell 
+	echo -e "${green}all done!${reset}"
 }
 
 revert() {
-	sudo apt remove gnome-shell-extension-no-annoyance node-typescript -y
-	rm -rf ~/.local/share/gnome-shell/extensions/{bluetooth-quick-connect@bjarosze.gmail.com,unite@hardpixel.eu,blur-my-shell@aunetx,just-perfection-desktop@just-perfection,caffeine@patapon.info,tiling-assistant@leleat-on-github,noannoyance@sindex.com,pop-shell@system76.com}
-	gnome-extensions disable bluetooth-quick-connect@bjarosze.gmail.com unite@hardpixel.eu blur-my-shell@aunetx just-perfection-desktop@just-perfection caffeine@patapon.info tiling-assistant@leleat-on-github noannoyance@sindex.com pop-shell@system76.com -q
+	# sudo apt remove gnome-shell-extension-no-annoyance node-typescript -y
+	# rm -rf ~/.local/share/gnome-shell/extensions/{bluetooth-quick-connect@bjarosze.gmail.com,unite@hardpixel.eu,blur-my-shell@aunetx,just-perfection-desktop@just-perfection,caffeine@patapon.info,tiling-assistant@leleat-on-github,noannoyance@sindex.com,pop-shell@system76.com}
+	# gnome-extensions disable bluetooth-quick-connect@bjarosze.gmail.com unite@hardpixel.eu blur-my-shell@aunetx just-perfection-desktop@just-perfection caffeine@patapon.info tiling-assistant@leleat-on-github noannoyance@sindex.com pop-shell@system76.com -q
+	echo -e "${red}reverting is temporarily removed."
 }
 
 gui() {
