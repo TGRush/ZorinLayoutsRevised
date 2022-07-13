@@ -1,3 +1,9 @@
+# I have moved to Codeberg!
+## Check out this repository on the following link: https://codeberg.org/TGRush/ZorinLayoutsRevised
+
+Old Readme:
+
+<details>
 # ZorinLayoutsRevised
 A script which simplifies the process of applying some Tweaks to the Zorin OS Desktop.
 
@@ -50,3 +56,4 @@ subject to the following restrictions:
 
   3. This notice may not be removed or altered from any source distribution.
 ```
+</details>
